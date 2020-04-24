@@ -26,3 +26,9 @@ Rode o servidor:
 ```bash
 php artisan serve
 ```
+
+Habilitar a visualização das imagens na pasta storage
+
+```bash
+php artisan storage:link
+```
