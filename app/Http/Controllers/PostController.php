@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\CommentsPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 use Cache;
+use App\Mail\SharePost;
+
 
 class PostController extends Controller
 {
@@ -61,7 +64,6 @@ class PostController extends Controller
 
     }
 
-
     public function show(Post $post)
     {
         if(Cache::has($post->id) == false){
@@ -69,7 +71,7 @@ class PostController extends Controller
 
             $amountViewsPost = $post->views;
             $ViewsUpdate = $amountViewsPost + 1;
-    
+
             $post->update(['views' => $ViewsUpdate]);
         }
 
@@ -83,12 +85,12 @@ class PostController extends Controller
     {
         try {
             $postInstance = $this->post->findOrFail($request->post_id);
-        
+
             $amountLikesPost = $postInstance->likes;
             $likeUpdate = $amountLikesPost + 1;
-    
+
             $postInstance->update(['likes' => $likeUpdate]);
-    
+
             return response()->json([
                 'message' => 'Você curtiu',
                 'type' => 'success'
@@ -100,7 +102,18 @@ class PostController extends Controller
                 'type' => 'danger'
             ], 500);
         }
+    }
 
+    public function SharePost(Request $request, Post $post)
+    {
+
+        try {
+            Mail::send(new SharePost($post, $request));
+            return redirect()->route('post.home')->with(['type' => 'success', 'message' => 'Post compartilhado com sucesso' ]);
+        }
+        catch (Exception $e){
+            return redirect()->route('post.create')->with(['type' => 'danger', 'message' => 'Não foi compartilhar o post']);
+        }
     }
 
 }

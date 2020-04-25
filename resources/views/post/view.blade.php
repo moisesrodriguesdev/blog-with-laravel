@@ -4,7 +4,7 @@
     <div class="mb-3">
         <h1>{{ $post->title }}</h1>
         <input type="hidden" value="{{ $post->id }}" id="post_id">
-        <span class="line"></span>      
+        <span class="line"></span>
     </div>
 
     <div class="d-flex justify-content-center flex-column" style="width: 65%; margin: 0 auto;">
@@ -23,8 +23,11 @@
             <i class="fas fa-comment-alt" style="font-size: 30px"></i>
             <span class="pl-2">Comentar</span>
         </a>
-        <div class="addthis_inline_share_toolbox"></div>
-        <span class="msg_success" id="msg_like" style="display: none;">Você curtiu o post</span>  
+        <a href="#" data-toggle="modal" data-target="#exampleModal" class="d-flex flex-row link">
+            <i class="fas fa-share" style="font-size: 30px"></i>
+            <span class="pl-2">Compartilhar</span>
+        </a>
+        <span class="msg_success" id="msg_like" style="display: none;">Você curtiu o post</span>
     </div>
 
         <div class="d-flex flex-column">
@@ -43,13 +46,36 @@
                     </span>
                 </div>
             </form>
-        </div>            
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Informe o email para compartilhar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('post.share', $post) }}" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <input type="email" name="email" class="form-control" Placeholder="exemplo@exemplo.com.br">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <script>
 
         let post_id = $("#post_id").val();
 
         $("#like").click(function () {
-            
+
             $.ajax({
                 method: "PUT",
                 url: "http://127.0.0.1:8000/post/like",
@@ -67,7 +93,7 @@
                         });
                     }, 3000);
 
-                    
+
                 },
                 error: function (error) {
                     console.log({ "pq erro": error });
@@ -82,7 +108,7 @@
 
 
         $("#comment").click(function(e){
-            e.preventDefault(); 
+            e.preventDefault();
             $("#msg-post").focus();
         });
 

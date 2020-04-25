@@ -6,7 +6,9 @@
 }
 .link {
     color: #000;
-    padding-right: 10em;
+    padding-right: 12em;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 a:link {
     width: 10%;

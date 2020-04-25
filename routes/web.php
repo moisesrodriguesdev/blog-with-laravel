@@ -20,3 +20,14 @@ Route::get('post/{post}', 'PostController@show')->name('post.show');
 Route::put('post/like', 'PostController@PostLike')->name('post.like');
 Route::get('dashboard', 'DashboardController@index')->name('dashboard.home');
 Route::post('post/comment', 'CommentPostController@store')->name('post.comment');
+Route::post('post/{post}', 'PostController@SharePost')->name('post.share');
+
+Route::get('email', function(){
+//    return new \App\Mail\SharePost();
+
+//    Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => 'odskn'], function ($message) {
+//        $message->to('moises.rodrigues@unifametro.edu.br');
+//        $message->from('moisesabreurodrigues@gmail.com','Moises teste');
+//        $message->subject('Recebemos sua solicitação.');
+//    });
+});
