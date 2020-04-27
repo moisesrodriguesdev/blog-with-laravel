@@ -112,7 +112,7 @@ class PostController extends Controller
             return redirect()->route('post.home')->with(['type' => 'success', 'message' => 'Post compartilhado com sucesso' ]);
         }
         catch (Exception $e){
-            return redirect()->route('post.create')->with(['type' => 'danger', 'message' => 'Não foi compartilhar o post']);
+            return redirect()->route('post.home')->with(['type' => 'danger', 'message' => 'Não foi compartilhar o post' . $e->getMessage()]);
         }
     }
 

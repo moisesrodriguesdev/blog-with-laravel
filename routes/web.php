@@ -23,11 +23,14 @@ Route::post('post/comment', 'CommentPostController@store')->name('post.comment')
 Route::post('post/{post}', 'PostController@SharePost')->name('post.share');
 
 Route::get('email', function(){
+
+    dd(storage_path('app/public/post/1/20150807_213928_7549_752891.jpg'));
+
 //    return new \App\Mail\SharePost();
 
-//    Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => 'odskn'], function ($message) {
-//        $message->to('moises.rodrigues@unifametro.edu.br');
-//        $message->from('moisesabreurodrigues@gmail.com','Moises teste');
-//        $message->subject('Recebemos sua solicitação.');
-//    });
+   Mail::send('emails.sharedpost', ['protocolo' => 'odskn'], function ($message) {
+       $message->to('moisesabreurodrigues@gmail.com');
+       $message->from('moises.rodrigues@unifametro.edu.br','Post');
+       $message->subject('Recebemos sua solicitação.');
+   });
 });

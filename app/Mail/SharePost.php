@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Post;
+use Storage;
 
 class SharePost extends Mailable
 {
@@ -33,8 +34,11 @@ class SharePost extends Mailable
      */
     public function build()
     {
+
         $this->subject($this->post->title);
         $this->to($this->request->email);
+        $this->attach(public_path('/storage/post/' . $this->post->id . '/' . $this->post->imagem));
+        $this->from('moises.rodrigues@unifametro.edu.br','Moises Rodrigues');
         $this->markdown('emails.sharedpost',
             [
                 'post' => $this->post
